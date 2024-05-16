@@ -1,0 +1,82 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Menu {
+  available   Boolean?
+  category    EnumMenuCategory?
+  createdAt   DateTime          @default(now())
+  description String?
+  id          String            @id @default(cuid())
+  image       Json?
+  name        String?
+  price       Float?
+  updatedAt   DateTime          @updatedAt
+}
+
+model Order {
+  createdAt DateTime         @default(now())
+  customer  String?
+  id        String           @id @default(cuid())
+  notes     String?
+  status    EnumOrderStatus?
+  updatedAt DateTime         @updatedAt
+}
+
+model Feedback {
+  createdAt DateTime @default(now())
+  customer  String?
+  feedback  String?
+  id        String   @id @default(cuid())
+  rating    Int?
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  createdAt DateTime        @default(now())
+  email     String?
+  id        String          @id @default(cuid())
+  name      String?
+  password  String?
+  roles     EnumUserRoles[]
+  updatedAt DateTime        @updatedAt
+}
+
+model Table {
+  createdAt   DateTime @default(now())
+  id          String   @id @default(cuid())
+  qrCode      String?
+  tableNum    Int?
+  tableNumber Int?
+  tableQrCode String?
+  updatedAt   DateTime @updatedAt
+}
+
+model Report {
+  content    Json?
+  createdAt  DateTime              @default(now())
+  id         String                @id @default(cuid())
+  reportType EnumReportReportType?
+  updatedAt  DateTime              @updatedAt
+}
+
+enum EnumMenuCategory {
+  Option1
+}
+
+enum EnumOrderStatus {
+  Option1
+}
+
+enum EnumUserRoles {
+  Option1
+}
+
+enum EnumReportReportType {
+  Option1
+}
